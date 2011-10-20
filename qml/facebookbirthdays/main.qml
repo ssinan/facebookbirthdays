@@ -12,22 +12,30 @@ Window {
     PageStack {
         id: pageStack
         anchors { left: parent.left; right: parent.right; top: statusBar.bottom; bottom: toolBar.top }
+        Timer {
+            interval: 2000; running: true; repeat: false
+            onTriggered: {
+                pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+                toolBar.visible = true
+            }
+        }
     }
 
     ToolBar {
         id: toolBar
         anchors.bottom: window.bottom
+        visible: false
         tools: ToolBarLayout {
             id: toolBarLayout
             ToolButton {
                 flat: true
                 iconSource: "toolbar-back"
-                onClicked: pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
+                onClicked: pageStack.depth <= 2 ? Qt.quit() : pageStack.pop()
             }
         }
     }
 
     Component.onCompleted: {
-        pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+        pageStack.push(Qt.resolvedUrl("SplashScreen.qml"))
     }
 }

@@ -35,3 +35,18 @@ SOURCES += main.cpp
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
+
+OTHER_FILES += \
+    qml/facebookbirthdays/img/splashscreen.png \
+    qml/facebookbirthdays/img/app_icon.png
+
+RESOURCES +=
+
+
+
+
+
+
+
+
+
