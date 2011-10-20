@@ -12,6 +12,7 @@ Window {
     PageStack {
         id: pageStack
         anchors { left: parent.left; right: parent.right; top: statusBar.bottom; bottom: toolBar.top }
+        // splash timer
         Timer {
             interval: 2000; running: true; repeat: false
             onTriggered: {

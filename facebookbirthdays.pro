@@ -32,15 +32,20 @@ CONFIG += qt-components
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp
 
+# qjson
+include(qjson/qjson.pri)
+
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
 
 OTHER_FILES += \
     qml/facebookbirthdays/img/splashscreen.png \
-    qml/facebookbirthdays/img/app_icon.png
+    qml/facebookbirthdays/img/app_icon.png \
+    qml/facebookbirthdays/js/storage.js
 
 RESOURCES +=
+
 
 
 
