@@ -1,5 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
+DEFINES += QJSON_MAKEDLL
 PRIVATE_HEADERS += \
   json_parser.hh \
   json_scanner.h \
