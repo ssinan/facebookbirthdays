@@ -8,6 +8,11 @@ import "js/storage.js" as Storage
 
 Page {
     id: mainPage
+    property string access_token
+
+    function checkAccessToken() {
+
+    }
 
     Constants {
         id: constants
@@ -15,7 +20,7 @@ Page {
 
     Flickable {
         id: flickable
-        flickableDirection: Flickable.HorizontalAndVerticalFlick
+        flickableDirection: Flickable.AutoFlickDirection
         boundsBehavior: Flickable.DragAndOvershootBounds
         anchors.fill: parent
 
@@ -53,9 +58,12 @@ Page {
                 loader.running = false
                 loader.visible = false
                 if (webView.url.toString().indexOf("https://www.facebook.com/connect/login_success.html", 0) == 0) {
+                    // parse the access token
                     var i1 = webView.url.toString().indexOf("access_token=") + 13
                     var i2 = webView.url.toString().indexOf("&expires_in")
-                    var access_token = webView.url.toString().slice(i1, i2)
+                    access_token = webView.url.toString().slice(i1, i2)
+                    // save the access token
+                    Storage.setSetting("access_token", access_token);
                     console.log("access_token: " + access_token)
                 }
             }
@@ -64,10 +72,9 @@ Page {
 
     Component.onCompleted: {
         // Initialize the database
-        //Storage.initialize();
-        // Sets a value in the database
-        //Storage.setSetting("mySetting","myValue");
-        // Sets the textDisplay element's text to the value we just set
-        //textDisplay.text = "The value of mySetting is:\n" + Storage.getSetting("mySetting");
+        Storage.initialize();
+        // if there is an access token, check if it's still valid
+        access_token = Storage.getSetting("access_token")
+        console.log("access_token: " + access_token)
     }
 }

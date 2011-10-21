@@ -31,7 +31,7 @@ Window {
             ToolButton {
                 flat: true
                 iconSource: "toolbar-back"
-                onClicked: pageStack.depth <= 2 ? Qt.quit() : pageStack.pop()
+                onClicked: pageStack.depth <= 3 ? Qt.quit() : pageStack.pop()
             }
         }
     }
