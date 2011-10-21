@@ -12,14 +12,6 @@ Window {
     PageStack {
         id: pageStack
         anchors { left: parent.left; right: parent.right; top: statusBar.bottom; bottom: toolBar.top }
-        // splash timer
-        Timer {
-            interval: 500; running: true; repeat: false
-            onTriggered: {
-                pageStack.push(Qt.resolvedUrl("AuthPage.qml"))
-                toolBar.visible = true
-            }
-        }
     }
 
     ToolBar {
@@ -31,12 +23,34 @@ Window {
             ToolButton {
                 flat: true
                 iconSource: "toolbar-back"
-                onClicked: pageStack.depth <= 3 ? Qt.quit() : pageStack.pop()
+                onClicked: pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
             }
         }
     }
 
+    AuthPage {
+        id: authPage
+
+        onLoginPageLoaded: {
+            pageStack.replace(authPage)
+            toolBar.visible = true
+        }
+
+        onHasAccessToken: {
+            pageStack.replace(friendListPage)
+            toolBar.visible = true
+        }
+    }
+
+    SplashScreen {
+        id: splashScreen
+    }
+
+    FriendListPage {
+        id: friendListPage
+    }
+
     Component.onCompleted: {
-        pageStack.push(Qt.resolvedUrl("SplashScreen.qml"))
+        pageStack.push(splashScreen)
     }
 }
