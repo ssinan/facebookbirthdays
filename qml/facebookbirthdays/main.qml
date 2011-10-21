@@ -14,9 +14,9 @@ Window {
         anchors { left: parent.left; right: parent.right; top: statusBar.bottom; bottom: toolBar.top }
         // splash timer
         Timer {
-            interval: 2000; running: true; repeat: false
+            interval: 500; running: true; repeat: false
             onTriggered: {
-                pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+                pageStack.push(Qt.resolvedUrl("AuthPage.qml"))
                 toolBar.visible = true
             }
         }

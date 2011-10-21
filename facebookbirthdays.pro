@@ -30,7 +30,8 @@ CONFIG += qdeclarative-boostable
 CONFIG += qt-components
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    fbapplication.cpp
 
 # qjson
 include(qjson/qjson.pri)
@@ -46,10 +47,11 @@ OTHER_FILES += \
 
 RESOURCES +=
 
+HEADERS += \
+    constants.h \
+    fbapplication.h
 
-
-
-
+INCLUDEPATH += src
 
 
 
