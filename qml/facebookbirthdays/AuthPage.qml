@@ -13,20 +13,22 @@ Page {
     signal hasAccessToken(string accessToken)
 
     function isAccessTokenValid() {
-        tokenChecker.url = "https://graph.facebook.com/me?access_token=" + accessToken
-    }
-
-    WebView {
-        id: tokenChecker
-        visible: false
-
-        onLoadFinished: {
-            if (html.toString().search("\"error\": {") < 0) {
-                authPage.hasAccessToken(accessToken)
-            } else {
-                webView.url = qsTr("https://www.facebook.com/dialog/oauth?client_id=%1&redirect_uri=https://www.facebook.com/connect/login_success.html&display=popup&scope=%2&response_type=token").arg(constants.FACEBOOK_API_KEY).arg(constants.FACEBOOK_PERMISSIONS)
+        //QTBUG-17405 - QML WebView should have access to the HTTP status code
+        var xhr = new XMLHttpRequest;
+        xhr.open("GET", "https://graph.facebook.com/me?access_token=" + accessToken);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                console.log("isAccessTokenValid()::xhr: " + xhr.status)
+                if (xhr.status != 200) {
+                    // access token has expired, get a new one
+                    webView.url = qsTr("https://www.facebook.com/dialog/oauth?client_id=%1&redirect_uri=https://www.facebook.com/connect/login_success.html&display=popup&scope=%2&response_type=token").arg(constants.FACEBOOK_API_KEY).arg(constants.FACEBOOK_PERMISSIONS)
+                } else {
+                    // we have a valid access token
+                    authPage.hasAccessToken(accessToken)
+                }
             }
         }
+        xhr.send();
     }
 
     Constants {
@@ -80,7 +82,9 @@ Page {
                     // save the access token
                     Storage.setSetting("accessToken", accessToken)
                     console.log("accessToken: " + accessToken)
-                    isAccessTokenValid()
+
+                    // we're done with authentication
+                    authPage.hasAccessToken(accessToken)
                 }
             }
         }
