@@ -38,6 +38,7 @@ Window {
 
         onHasAccessToken: {
             pageStack.replace(friendListPage)
+            friendListPage.activate()
             toolBar.visible = true
         }
     }

@@ -80,7 +80,7 @@ Page {
                     accessToken = url.toString().slice(i1, i2)
 
                     // save the access token
-                    Storage.setSetting("accessToken", accessToken)
+                    Storage.setSetting("access_token", accessToken)
                     console.log("accessToken: " + accessToken)
 
                     // we're done with authentication
@@ -94,7 +94,7 @@ Page {
         // initialize the database
         Storage.initialize();
         // if there is an access token, check if it's still valid
-        accessToken = Storage.getSetting("accessToken")
+        accessToken = Storage.getSetting("access_token")
         console.log("accessToken(from cache): " + accessToken)
         isAccessTokenValid()
     }
