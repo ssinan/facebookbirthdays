@@ -73,17 +73,54 @@ Page {
     Component {
         id: listDelegate
 
-        Text {
-            text: name + ", " + birthday
-            color: platformStyle.colorNormalLight
-            font.pixelSize: 20
+        Item {
+            width: parent.parent.width
+            height: 45
+
+            Rectangle {
+                id: selectedRect
+                visible: false
+                color: "white"
+                opacity: 0.5
+                anchors.fill: parent
+            }
+            MouseArea {
+                anchors.fill: parent
+                onPressedChanged: {
+                    selectedRect.visible = pressed;
+                }
+                //onClicked: base.activityRowClicked(activityId)
+            }
+            Text {
+                anchors.left: parent.left
+                anchors.leftMargin: 15
+                anchors.verticalCenter: parent.verticalCenter
+                font.pointSize: 8
+                font.letterSpacing: -1
+                color: platformStyle.colorNormalLight
+                text: "<b>" + name + "</b>"
+            }
+            Rectangle {
+                width: parent.width
+                height: 1
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                color: "white"
+            }
         }
     }
 
     ListView {
+        id: friendList
         anchors.fill: parent
         model: listModel
         delegate: listDelegate
         clip: true
+    }
+
+    ScrollBar {
+        flickableItem: friendList
+        orientation: Qt.Vertical
+        anchors.right: parent.right
     }
 }
