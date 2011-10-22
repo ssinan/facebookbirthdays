@@ -15,7 +15,7 @@
  public:
      inline QString FACEBOOK_API_KEY() const { return QString("277515672282681");}
      inline QString FACEBOOK_API_SECRET() const { return QString("638d281a19febdc3bd31b26566c61039");}
-     inline QString FACEBOOK_PERMISSIONS() const { return QString("friends_birthday,friends_groups,offline_access");}
+     inline QString FACEBOOK_PERMISSIONS() const { return QString("friends_birthday,read_friendlists,offline_access");}
  };
 
 #endif // CONSTANTS_H

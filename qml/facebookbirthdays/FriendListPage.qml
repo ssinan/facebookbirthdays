@@ -31,19 +31,19 @@ Page {
                         for (var x=0; x<i; x++) {
                             if (!reqDone[x]) {
                                 if (xhrList[x].readyState == XMLHttpRequest.DONE) {
-                                    console.log(xhrList[x].responseText)
                                     var d = JSON.parse(xhrList[x].responseText)
+                                    listModel.append({"name": d.name, "birthday": d.birthday})
                                     reqDone[x] = true
+                                    // should dismiss busy indicator after the whole list is done?
+                                    loader.running = false
+                                    loader.visible = false
+                                    loadingText.visible = false
                                 }
                             }
                         }
                     }
                     xhrList[i].send()
-                    listModel.append({"name": o.name, "id": o.id});
                 }
-                loader.running = false
-                loader.visible = false
-                loadingText.visible = false
             }
         }
         xhr.send();
@@ -74,7 +74,7 @@ Page {
         id: listDelegate
 
         Text {
-            text: name + ", " + id
+            text: name + ", " + birthday
             color: platformStyle.colorNormalLight
             font.pixelSize: 20
         }
