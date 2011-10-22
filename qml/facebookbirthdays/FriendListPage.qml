@@ -16,9 +16,29 @@ Page {
         xhr.open("GET", "https://graph.facebook.com/me/friends?access_token=" + accessToken);
         xhr.onreadystatechange = function() {
             if (xhr.readyState == XMLHttpRequest.DONE) {
-                var r = JSON.parse(xhr.responseText);
+                var r = JSON.parse(xhr.responseText)
+                var xhrList = new Array(r.data.length)
+                var reqDone = new Array(r.data.length)
+                for (var j in r.data) {
+                    reqDone[j] = false
+                }
                 for (var i in r.data) {
                     var o = r.data[i]
+                    // get each individual contact's info from facebook
+                    xhrList[i] = new XMLHttpRequest
+                    xhrList[i].open("GET", "https://graph.facebook.com/" + o.id + "?access_token=" + accessToken)
+                    xhrList[i].onreadystatechange = function() {
+                        for (var x=0; x<i; x++) {
+                            if (!reqDone[x]) {
+                                if (xhrList[x].readyState == XMLHttpRequest.DONE) {
+                                    console.log(xhrList[x].responseText)
+                                    var d = JSON.parse(xhrList[x].responseText)
+                                    reqDone[x] = true
+                                }
+                            }
+                        }
+                    }
+                    xhrList[i].send()
                     listModel.append({"name": o.name, "id": o.id});
                 }
                 loader.running = false
