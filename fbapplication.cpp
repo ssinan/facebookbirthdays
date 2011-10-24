@@ -1,11 +1,13 @@
 #include "constants.h"
 #include "fbapplication.h"
+#include "birthdayimporter.h"
 
 FBApplication::FBApplication(QObject *parent) :
     QObject(parent)
 {
     viewer = QmlApplicationViewer::create();
     qmlRegisterType<Constants>("FBLibrary", 1, 0, "Constants");
+    qmlRegisterType<BirthdayImporter>("FBLibrary", 1, 0, "BirthdayImporter");
 }
 
 FBApplication::~FBApplication()

@@ -16,12 +16,16 @@ symbian:TARGET.UID3 = 0xE4685769
 #symbian:DEPLOYMENT.installer_header = 0x2002CCCF
 
 # Allow network access on Symbian
-symbian:TARGET.CAPABILITY += NetworkServices
+symbian:TARGET.CAPABILITY += NetworkServices \
+                             ReadUserData \
+                             WriteUserData \
+                             ReadDeviceData \
+                             WriteDeviceData \
 
 # If your application uses the Qt Mobility libraries, uncomment the following
 # lines and add the respective components to the MOBILITY variable.
-# CONFIG += mobility
-# MOBILITY +=
+CONFIG += mobility
+MOBILITY += organizer
 
 # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
 CONFIG += qdeclarative-boostable
@@ -31,7 +35,8 @@ CONFIG += qt-components
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    fbapplication.cpp
+    fbapplication.cpp \
+    birthdayimporter.cpp
 
 # qjson
 include(qjson/qjson.pri)
@@ -49,9 +54,12 @@ RESOURCES +=
 
 HEADERS += \
     constants.h \
-    fbapplication.h
+    fbapplication.h \
+    birthdayimporter.h
 
 INCLUDEPATH += src
+
+
 
 
 

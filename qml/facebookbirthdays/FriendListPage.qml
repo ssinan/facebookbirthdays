@@ -3,6 +3,7 @@ import com.nokia.symbian 1.0
 import FBLibrary 1.0
 import QtWebKit 1.0
 import "js/storage.js" as Storage
+import QtMobility.organizer 1.1
 
 Page {
     id: friendListPage
@@ -32,7 +33,9 @@ Page {
                             if (!reqDone[x]) {
                                 if (xhrList[x].readyState == XMLHttpRequest.DONE) {
                                     var d = JSON.parse(xhrList[x].responseText)
-                                    listModel.append({"name": d.name, "birthday": d.birthday})
+                                    if (typeof d.birthday != 'undefined') {
+                                        listModel.append({"fullname": d.name, "birthday": d.birthday})
+                                    }
                                     reqDone[x] = true
                                     // should dismiss busy indicator after the whole list is done?
                                     loader.running = false
@@ -47,6 +50,12 @@ Page {
             }
         }
         xhr.send();
+    }
+
+    function formatBdayDatetime(bday) {
+        var month = bday.slice(0,2)
+        var day = bday.slice(3,5)
+        return "2011-" + month + "-" + day
     }
 
     BusyIndicator {
@@ -89,7 +98,16 @@ Page {
                 onPressedChanged: {
                     selectedRect.visible = pressed;
                 }
-                //onClicked: base.activityRowClicked(activityId)
+                onClicked: {
+                    console.log(birthdayImporter.name)
+                    console.log(birthdayImporter.date)
+                    birthdayImporter.importToCalendar()
+                }
+            }
+            BirthdayImporter {
+                id: birthdayImporter
+                name: fullname
+                date: formatBdayDatetime(birthday)
             }
             Text {
                 anchors.left: parent.left
@@ -98,7 +116,7 @@ Page {
                 font.pointSize: 8
                 font.letterSpacing: -1
                 color: platformStyle.colorNormalLight
-                text: "<b>" + name + "</b>"
+                text: "<b>" + fullname + "</b>"
             }
             Rectangle {
                 width: parent.width
