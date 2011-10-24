@@ -52,7 +52,7 @@ void BirthdayImporter::importToCalendar()
 //    reminder.setSecondsBeforeStart(24 * 60 * 60);
 //    event.saveDetail(&reminder);
     // check if this event is added before
-    QList<QtMobility::QOrganizerItem> items = defaultManager.items();
+    /* QList<QtMobility::QOrganizerItem> items = defaultManager.items();
     foreach (QtMobility::QOrganizerItem item, items) {
         if (item.type() == QtMobility::QOrganizerItemType::TypeEvent) {
             QtMobility::QOrganizerEvent e(item);
@@ -62,7 +62,7 @@ void BirthdayImporter::importToCalendar()
                 return;
             }
         }
-    }
+    } */
     if (defaultManager.saveItem(&event)) {
         qDebug() <<  event.description() << QString::fromUtf8(" ba\u015far\u0131yla takvime eklendi.");
         //MessageBox::showMessageBox(window(), m_activityDetailWidget->m_activity->title() + QString::fromUtf8(" ba\u015far\u0131yla takvime eklendi."), QNUConstants::BUTTON_OK);
