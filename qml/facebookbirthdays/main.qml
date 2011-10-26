@@ -39,6 +39,7 @@ Window {
         ToolButton {
             flat: true
             iconSource: "toolbar-add"
+            onClicked: friendListPage.addFriendsToCalendar()
         }
     }
 

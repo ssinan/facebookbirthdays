@@ -49,9 +49,36 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
+        Dialog {
+            id: errorDialog
+
+            buttons: [
+                Button {
+                    text: "Ok"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottomMargin: 10
+                    onClicked: Qt.quit()
+                }
+            ]
+            title: [
+                Text {
+                    text: "Error"
+                }
+            ]
+            content: [
+                Text {
+                    text: "Internet connection error.<br/> Application will close."
+                }
+            ]
+        }
+
         WebView {
             id: webView
             anchors.fill: parent
+
+            onLoadFailed: {
+                errorDialog.open()
+            }
 
             onLoadStarted: {
                 webView.visible = false

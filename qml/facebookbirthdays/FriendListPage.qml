@@ -34,7 +34,7 @@ Page {
                                 if (xhrList[x].readyState == XMLHttpRequest.DONE) {
                                     var d = JSON.parse(xhrList[x].responseText)
                                     if (typeof d.birthday != 'undefined') {
-                                        listModel.append({"fullname": d.name, "birthday": d.birthday})
+                                        listModel.append({"fullname": d.name, "birthday": d.birthday, "chk": false})
                                     }
                                     reqDone[x] = true
                                     // should dismiss busy indicator after the whole list is done?
@@ -52,6 +52,14 @@ Page {
         xhr.send();
     }
 
+    function addFriendsToCalendar() {
+        for (var i=0; i<listModel.count; i++) {
+            if (listModel.get(i).chk) {
+                birthdayImporter.importToCalendar(listModel.get(i).fullname, formatBdayDatetime(listModel.get(i).birthday))
+            }
+        }
+    }
+
     function formatBdayDatetime(bday) {
         var month = bday.slice(0,2)
         var day = bday.slice(3,5)
@@ -64,6 +72,10 @@ Page {
         height: 60
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
+    }
+
+    BirthdayImporter {
+        id: birthdayImporter
     }
 
     Text {
@@ -93,17 +105,19 @@ Page {
                 opacity: 0.5
                 anchors.fill: parent
             }
-            BirthdayImporter {
-                id: birthdayImporter
-                name: fullname
-                date: formatBdayDatetime(birthday)
-            }
             CheckBox {
                 id: checkBox
                 anchors.left: parent.left
                 text: "<b>" + fullname + "</b><br/>" + birthday
                 anchors.top: parent.top
                 anchors.topMargin: 5
+                onCheckedChanged: {
+                    if (checked) {
+                        listModel.get(index).chk = true
+                    } else {
+                        listModel.get(index).chk = false
+                    }
+                }
             }
             Rectangle {
                 width: parent.width

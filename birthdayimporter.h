@@ -19,6 +19,7 @@ public:
     void setDate(const QDateTime&);
 
     Q_INVOKABLE void importToCalendar();
+    Q_INVOKABLE void importToCalendar(QString name, QDateTime date);
 
 signals:
     void nameChanged();
