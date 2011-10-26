@@ -4,9 +4,8 @@ import com.nokia.symbian 1.0
 Page {
     id: splashScreen
     Image {
-        anchors.centerIn: parent
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
+        fillMode: Image.PreserveAspectCrop
         source: "./img/splashscreen.png"
     }
 }

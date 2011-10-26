@@ -84,7 +84,7 @@ Page {
 
         Item {
             width: parent.parent.width
-            height: 45
+            height: checkBox.height + 15
 
             Rectangle {
                 id: selectedRect
@@ -93,30 +93,17 @@ Page {
                 opacity: 0.5
                 anchors.fill: parent
             }
-            MouseArea {
-                anchors.fill: parent
-                onPressedChanged: {
-                    selectedRect.visible = pressed;
-                }
-                onClicked: {
-                    console.log(birthdayImporter.name)
-                    console.log(birthdayImporter.date)
-                    birthdayImporter.importToCalendar()
-                }
-            }
             BirthdayImporter {
                 id: birthdayImporter
                 name: fullname
                 date: formatBdayDatetime(birthday)
             }
-            Text {
+            CheckBox {
+                id: checkBox
                 anchors.left: parent.left
-                anchors.leftMargin: 15
-                anchors.verticalCenter: parent.verticalCenter
-                font.pointSize: 8
-                font.letterSpacing: -1
-                color: platformStyle.colorNormalLight
-                text: "<b>" + fullname + "</b>"
+                text: "<b>" + fullname + "</b><br/>" + birthday
+                anchors.top: parent.top
+                anchors.topMargin: 5
             }
             Rectangle {
                 width: parent.width
